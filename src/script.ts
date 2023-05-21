@@ -2,7 +2,7 @@ import path from "path";
 import XLSX from "xlsx";
 import { getFiles, isOfFormat } from "./utils";
 
-const baseUploadPath = path.join(__dirname, "../public/uploads");
+const baseUploadPath = path.join(__dirname, "../public/uploads/");
 
 const files = getFiles(baseUploadPath);
 
