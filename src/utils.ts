@@ -40,7 +40,7 @@ const getFiles = (basePath: string) => {
 		}
 	});
 
-	return availableFiles.filter((file) => isOfFormat(file, "csv"));
+	return [...new Set(availableFiles)];
 };
 
 export { getFiles };
