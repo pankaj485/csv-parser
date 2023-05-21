@@ -5,6 +5,25 @@ const isOfFormat = (fileToVerify: string, formatToVerify: string) => {
 
 	return fileFormat === formatToVerify ? true : false;
 };
+const convertToFormat = (file: string, basePath: string, format: string) => {
+	const fileName = file.split(".")[0];
+	const modifiedFile = `${fileName}.${format}`;
+	const workBook = XLSX.readFile(basePath + file);
+	let converted: boolean = false;
+
+	if (format === "csv") {
+		converted = true;
+		XLSX.writeFile(workBook, basePath + modifiedFile, { bookType: format });
+	}
+
+	console.log(
+		converted
+			? `converted "${file}" to "${modifiedFile}"`
+			: `failed to convert "${file}" to "${modifiedFile}"`
+	);
+	return modifiedFile;
+};
+
 const getFiles = (basePath: string) => {
 	const availableFiles: string[] = [];
 
@@ -14,22 +33,14 @@ const getFiles = (basePath: string) => {
 	}
 
 	fs.readdirSync(basePath).map((file) => {
-		availableFiles.push(file);
+		if (isOfFormat(file, "csv")) {
+			availableFiles.push(file);
+		} else if (isOfFormat(file, "xlsx")) {
+			availableFiles.push(convertToFormat(file, basePath, "csv"));
+		}
 	});
 
-	return availableFiles;
+	return availableFiles.filter((file) => isOfFormat(file, "csv"));
 };
 
-const convertToFormat = (file: string, basePath: string, format: string) => {
-	const fileName = file.split(".")[0];
-	const csvFile = `${fileName}.${format}`;
-	const workBook = XLSX.readFile(basePath + file);
-
-	if (format === "csv") {
-		XLSX.writeFile(workBook, basePath + csvFile, { bookType: "csv" });
-	}
-
-	console.log(`converted "${file}" to "${csvFile}"`);
-};
-
-export { getFiles, isOfFormat, convertToFormat };
+export { getFiles };
