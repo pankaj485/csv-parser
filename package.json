@@ -17,6 +17,7 @@
 		"typescript": "^5.0.4"
 	},
 	"dependencies": {
+		"csv-parse": "^5.3.10",
 		"xlsx": "^0.18.5"
 	}
 }
