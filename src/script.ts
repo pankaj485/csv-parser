@@ -6,6 +6,7 @@ import { parseCsv } from "./utils/csvParser";
 const baseUploadPath = path.join(__dirname, "../public/uploads/");
 // if the directory doesn't exist then create it
 if (!fs.existsSync(baseUploadPath)) {
+	console.log("creating file upload directory");
 	fs.mkdirSync(baseUploadPath, { recursive: true });
 }
 
