@@ -1,5 +1,5 @@
-const fs = require("fs");
-const csv = require("csv-parser");
+import fs from "fs";
+import csv from "csv-parser";
 
 const parseCsv = (filePath: string) => {
 	const file = filePath.split("/")[filePath.split("/").length - 1];

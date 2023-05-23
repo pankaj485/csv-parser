@@ -27,11 +27,6 @@ const convertToFormat = (file: string, basePath: string, format: string) => {
 const getFiles = (basePath: string) => {
 	const availableFiles: string[] = [];
 
-	// if the directory doesn't exist then create it
-	if (!fs.existsSync(basePath)) {
-		fs.mkdirSync(basePath, { recursive: true });
-	}
-
 	const filesArray = fs.readdirSync(basePath);
 
 	if (!!filesArray.length) {
