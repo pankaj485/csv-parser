@@ -1,14 +1,21 @@
 const fs = require("fs");
-const { parse } = require("csv-parse");
+const csv = require("csv-parser");
 
-const parseCsv = (file: string) => {
-	const parserConfig = { delimeter: ",", from_line: 4, trim: true };
-
-	fs.createReadStream(file)
-		.pipe(parse(parserConfig))
-		.on("data", function (record: string[]) {
-			console.log(record);
-		});
+const parseCsv = (filePath: string) => {
+	const file = filePath.split("/")[filePath.split("/").length - 1];
+	if (file !== "undefined") {
+		fs.createReadStream(filePath)
+			.pipe(csv())
+			.on("data", (data: any) => console.log(data))
+			.on("end", () => {
+				// [
+				//   { NAME: 'Daffy Duck', AGE: '24' },
+				//   { NAME: 'Bugs Bunny', AGE: '22' }
+				// ]
+			});
+	} else {
+		console.log("No files found. Please upload at least one file to continue.");
+	}
 };
 
 export { parseCsv };

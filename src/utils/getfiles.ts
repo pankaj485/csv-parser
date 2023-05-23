@@ -32,13 +32,17 @@ const getFiles = (basePath: string) => {
 		fs.mkdirSync(basePath, { recursive: true });
 	}
 
-	fs.readdirSync(basePath).map((file) => {
-		if (isOfFormat(file, "csv")) {
-			availableFiles.push(file);
-		} else if (isOfFormat(file, "xlsx")) {
-			availableFiles.push(convertToFormat(file, basePath, "csv"));
-		}
-	});
+	const filesArray = fs.readdirSync(basePath);
+
+	if (!!filesArray.length) {
+		filesArray.map((file) => {
+			if (isOfFormat(file, "csv")) {
+				availableFiles.push(file);
+			} else if (isOfFormat(file, "xlsx")) {
+				availableFiles.push(convertToFormat(file, basePath, "csv"));
+			}
+		});
+	}
 
 	return [...new Set(availableFiles)];
 };
