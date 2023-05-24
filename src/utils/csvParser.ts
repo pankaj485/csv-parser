@@ -2,7 +2,7 @@ import fs from "fs";
 import csv from "csv-parser";
 
 type options = {
-	headers?: string[]; // "description", "industry", "level", "size", "line_code", "value"
+	headers?: string[];
 };
 
 type currentData = {
@@ -23,8 +23,13 @@ const parseCsv = (filePath: string, options: options) => {
 			.on("data", (data: any) => {
 				let currentData: currentData = {};
 				options.headers?.forEach((header) => {
-					currentData[header] = data[header];
-					finalParsedData.push(currentData);
+					if (data[header]) {
+						currentData[header] = data[header];
+						finalParsedData.push(currentData);
+					} else {
+						console.log(`'${header}' header not found in '${file}'`);
+						currentData[header] = "";
+					}
 				});
 			})
 			.on("end", () => {

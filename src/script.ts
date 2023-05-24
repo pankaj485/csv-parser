@@ -11,7 +11,9 @@ if (!fs.existsSync(baseUploadPath)) {
 }
 
 getFiles(baseUploadPath).map((fileName) => {
+	// NOTE: the values are hardcoded based on the file used in the developement
+	// "description", "industry", "level", "size", "line_code", "value"
 	parseCsv(baseUploadPath + fileName, {
-		headers: ["description", "industry", "level"], // NOTE: the values are hardcoded based on the file used in the developement
+		headers: ["level", "basePrice"],
 	});
 });
