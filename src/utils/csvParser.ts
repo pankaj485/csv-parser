@@ -5,8 +5,13 @@ type options = {
 	headers?: string[]; // "description", "industry", "level", "size", "line_code", "value"
 };
 
+type currentData = {
+	[key: string]: string;
+};
+
 const parseCsv = (filePath: string, options: options) => {
 	const file = filePath.split("/")[filePath.split("/").length - 1];
+	const finalParsedData: object[] = [];
 
 	if (file !== "undefined") {
 		options.headers?.forEach((header) => {
@@ -16,15 +21,14 @@ const parseCsv = (filePath: string, options: options) => {
 		fs.createReadStream(filePath)
 			.pipe(csv())
 			.on("data", (data: any) => {
+				let currentData: currentData = {};
 				options.headers?.forEach((header) => {
-					console.log(data[header]);
+					currentData[header] = data[header];
+					finalParsedData.push(currentData);
 				});
 			})
 			.on("end", () => {
-				// [
-				//   { NAME: 'Daffy Duck', AGE: '24' },
-				//   { NAME: 'Bugs Bunny', AGE: '22' }
-				// ]
+				console.log(finalParsedData);
 			});
 	} else {
 		console.log("No files found. Please upload at least one file to continue.");
