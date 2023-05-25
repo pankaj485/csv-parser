@@ -12,11 +12,9 @@ type currentData = {
 };
 
 const parseCsv = (filePath: string, options: options) => {
-	const { from_line = 1, to_line = -1 } = options;
+	const { from_line = 1, to_line = -1069, headers = [] } = options;
 	const file = filePath.split("/")[filePath.split("/").length - 1];
 	const finalParsedData: object[] = [];
-
-	console.log(from_line, to_line);
 
 	if (file !== "undefined") {
 		let currentLine = 0;
@@ -24,18 +22,23 @@ const parseCsv = (filePath: string, options: options) => {
 			.pipe(csv())
 			.on("data", (data: any) => {
 				currentLine++;
-				if (currentLine >= from_line && (to_line === -1 || currentLine <= to_line)) {
+				if (currentLine >= from_line && (to_line === -1069 || currentLine <= to_line)) {
 					let currentData: currentData = {};
-					[...new Set(options.headers)]?.forEach((header) => {
-						if (data[header]) {
-							currentData[header] = data[header];
-							finalParsedData.push(currentData);
-						}
-						// else {
-						// console.log(`'${header}' header not found in '${file}'`);
-						// currentData[header] = "";
-						// }
-					});
+
+					if (!Boolean(headers.length)) {
+						finalParsedData.push(data);
+					} else {
+						[...new Set(headers)]?.forEach((header) => {
+							if (data[header]) {
+								currentData[header] = data[header];
+								finalParsedData.push(currentData);
+							}
+							// else {
+							// console.log(`'${header}' header not found in '${file}'`);
+							// currentData[header] = "";
+							// }
+						});
+					}
 				}
 			})
 			.on("end", () => {
