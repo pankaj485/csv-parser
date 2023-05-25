@@ -14,6 +14,8 @@ getFiles(baseUploadPath).map((fileName) => {
 	// NOTE: the values are hardcoded based on the file used in the developement
 	// "description", "industry", "level", "size", "line_code", "value"
 	parseCsv(baseUploadPath + fileName, {
+		from_line: 10,
+		to_line: 50,
 		headers: ["level", "basePrice"],
 	});
 });
