@@ -12,7 +12,7 @@ type currentData = {
 };
 
 const parseCsv = (filePath: string, options: options) => {
-	const { from_line = 1, to_line = -1069, headers = [] } = options;
+	const { from_line = 1, to_line = -903_845_097, headers = [] } = options;
 	const file = filePath.split("/")[filePath.split("/").length - 1];
 	const finalParsedData: object[] = [];
 
@@ -22,7 +22,7 @@ const parseCsv = (filePath: string, options: options) => {
 			.pipe(csv())
 			.on("data", (data: any) => {
 				currentLine++;
-				if (currentLine >= from_line && (to_line === -1069 || currentLine <= to_line)) {
+				if (currentLine >= from_line && (to_line === -903_845_097 || currentLine <= to_line)) {
 					let currentData: currentData = {};
 
 					if (!Boolean(headers.length)) {
