@@ -29,14 +29,10 @@ const parseCsv = (filePath: string, options: options) => {
 						finalParsedData.push(data);
 					} else {
 						[...new Set(headers)]?.forEach((header) => {
-							if (data[header]) {
-								currentData[header] = data[header];
+							if (data[header.trim()]) {
+								currentData[header.trim()] = data[header.trim()];
 								finalParsedData.push(currentData);
 							}
-							// else {
-							// console.log(`'${header}' header not found in '${file}'`);
-							// currentData[header] = "";
-							// }
 						});
 					}
 				}
