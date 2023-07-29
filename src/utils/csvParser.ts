@@ -44,8 +44,8 @@ const parseCsv = (filePath: string, options: options) => {
 				}
 			})
 			.on("end", () => {
-				console.log(finalParsedData);
-				console.log(`\ninvalid headers: ${invalidHeaders.map((header) => `'${header}'`)}`);
+				// console.log(finalParsedData);
+				// console.log(`\ninvalid headers: ${invalidHeaders.map((header) => `'${header}'`)}`);
 			});
 	} else {
 		console.log("No files found. Please upload at least one file to continue.");
